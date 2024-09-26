@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Epinsights Dashboard - Proof of Concept</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Epinsights Dashboard</h1>
+            <h2>A first proof of concept</h2>
+            <p class="disclaimer">Disclaimers:</p>
+            <ul>
+                <li>The values of the indicators have the sole purpose of illustrating the dashboard and have no relationship to actual epidemic risk or trends.</li>
+                <li>At its current stage, the dashboard is not performing any calculation nor using any contact or mobility data.</li>
+                <li>The figures are currently static mock-ups. In the real dashboard they would update responding to user actions and be interactive (zoom, hover, etc)</li>
+            </ul>
+        </header>
+        
+        <section class="user-actions">
+            <h3>User Actions</h3>
+            <label for="country-select">Choose Country:</label>
+            <select id="country-select">
+                <option value="france">France</option>
+                <option value="italy">Italy</option>
+                <option value="spain">Spain</option>
+                <option value="mexico">Mexico</option>
+                <option value="brazil">Brazil</option>
+                <option value="useast">US East Coast</option>
+                <option value="uswest">US West Coast</option>
+            </select>
+
+            <div class="transmission-mode">
+                <label for="transmission-select">Choose Mode of Transmission:</label>
+                <select id="transmission-select">
+                    <option value="directly-transmitted">Directly-transmitted</option>
+                    <option value="vector-borne">Vector-borne</option>
+                </select>
+                <div id="vector-options" style="display: none;">
+                    <input type="radio" id="custom-vector" name="vector" value="custom">
+                    <label for="custom-vector">Upload Custom Vector Distribution</label><br>
+                    <input type="file" id="file-upload" style="display: none;">
+                    <input type="radio" id="default-albopictus" name="vector" value="albopictus">
+                    <label for="default-albopictus">Choose Default A. albopictus</label><br>
+                    <input type="radio" id="default-aegypti" name="vector" value="aegypti">
+                    <label for="default-aegypti">Choose Default A. aegypti</label>
+                </div>
+            </div>
+        </section>
+
+        <section class="part">
+            <h2 style="color:#034168">Part 1 - Emerging epidemics: Estimating the risk of outbreak</h2>
+            <p>Based upon theory currently under development at <a href="https://www.eugeniovaldano.com">EV / The Modelers</a></p>
+            <div class="user-inputs">
+                <label for="reproduction-ratio">Input Basic Reproduction Ratio:</label>
+                <input type="number" id="reproduction-ratio" placeholder="Custom Value">
+                <select id="transmissibility">
+                    <option value="low">Low Transmissibility</option>
+                    <option value="mid">Mid Transmissibility</option>
+                    <option value="high">High Transmissibility</option>
+                </select>
+
+                <label for="importation-risk">Input Risk of Importation:</label>
+                <select id="importation-risk">
+                    <option value="custom">Input Custom Risk of Importation Data</option>
+                    <option value="default">Use Default Importation Data</option>
+                </select>
+            </div>
+            
+            <div class="figure" id="figure1">
+                <img src="fig1.png" alt="Figure 1: Placeholder for emerging epidemics" />
+            </div>
+
+            <!-- Mockup buttons and sliders -->
+            <div class="controls">
+                <button>Download Figure</button>
+                <button>Download Estimates</button>
+                <div class="sliders">
+                    <label for="risk-low">Low Risk Level:</label>
+                    <input type="range" id="risk-low" min="0" max="5" step="0.1" value="1.">
+                    <span id="risk-low-value">2.5</span><br>
+
+                    <label for="risk-mid">Mid Risk Level:</label>
+                    <input type="range" id="risk-mid" min="0" max="5" step="0.1" value="1.5">
+                    <span id="risk-mid-value">2.5</span><br>
+
+                    <label for="risk-high">High Risk Level:</label>
+                    <input type="range" id="risk-high" min="0" max="5" step="0.1" value="2.">
+                    <span id="risk-high-value">2.5</span><br>
+
+                    <label for="hotspot-threshold">Hotspot Threshold (%):</label>
+                    <input type="range" id="hotspot-threshold" min="90" max="99" step="1" value="85">
+                    <span id="hotspot-threshold-value">85%</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="part">
+            <h2 style="color:#C41E3A">Part 2 - Circulating epidemics: Analyzing trends</h2>
+            <p>Based upon the theory developed in <a href="https://www.nature.com/articles/s41567-024-02471-7">Birello et al. (2024) Nat Phys</a>, combined with standard approaches to computing Rt such as <a href="https://doi.org/10.1093/aje/kwt133">this</a>.</p>
+            
+            <!-- Upload surveillance data button -->
+            <div class="upload-surveillance">
+                <button id="upload-surveillance-btn">Upload your surveillance data</button>
+                <input type="file" id="surveillance-file-upload" style="display: none;">
+            </div>
+
+
+            <div class="figure" id="figure2">
+                <img src="fig2.png" alt="Figure 2: Placeholder for circulating epidemics" />
+            </div>
+
+            <!-- Mockup buttons and date slider -->
+            <div class="controls">
+                <button>Download Figure</button>
+                <button>Download Estimates</button>
+                <div class="date-slider">
+                    <label for="date-start">Start Date:</label>
+                    <input type="range" id="date-start" min="2023-04" max="2024-01" step="1" value="2023-04">
+                    <span id="date-start-value">April 2023</span><br>
+
+                    <label for="date-end">End Date:</label>
+                    <input type="range" id="date-end" min="2023-04" max="2024-01" step="1" value="2024-01">
+                    <span id="date-end-value">January 2024</span>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer style="text-align: center; font-size: small; margin-top: 20px; color: #888;">
+        &copy; 2024 Eugenio Valdano. All rights reserved. The content of this page may not be used, shared, or edited without explicit permission from the author.
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
