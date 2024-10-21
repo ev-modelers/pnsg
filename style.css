@@ -47,3 +47,48 @@ select, input[type="number"] {
     height: auto;
     border: 1px solid #ddd;
 }
+
+.align-left {
+    text-align: left;
+}
+
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+/* Tooltip text */
+.tooltip .tooltip-text {
+    visibility: hidden;
+    width: 220px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Position above the label */
+    left: 50%;
+    margin-left: -110px; /* Center the tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+/* Show the tooltip text when hovering */
+.tooltip:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+.meta-note {
+    font-style: italic; /* Makes the text italic */
+    color: #6a737d; /* A neutral grey color for the text */
+    background-color: #f5f5f5; /* Light background to make it stand out */
+    border-left: 4px solid #ffa500; /* Adds an orange left border */
+    padding: 5px 10px; /* Adds some padding */
+    margin: 10px 0; /* Adds margin for spacing */
+    display: block; /* Makes sure it behaves as a block element */
+    border-radius: 3px; /* Rounds the corners */
+}

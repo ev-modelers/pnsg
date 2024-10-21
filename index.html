@@ -11,12 +11,24 @@
         <header>
             <h1>Epinsights Dashboard</h1>
             <h2>A first proof of concept</h2>
-            <p class="disclaimer">Disclaimers:</p>
-            <ul>
+            <h3>Overview:</h3>
+            <p>
+                This dashboard is designed as a dynamic tool for estimating epidemic risk. It supports two main functionalities:
+            </p>
+            <ol class="align-left">
+                <li><strong>Emerging Outbreak Risk</strong>: The dashboard assesses the likelihood that the introduction, emergence, or re-emergence of a pathogen in a specific area will lead to an epidemic outbreak.</li>
+                <li><strong>Ongoing Epidemic Trends</strong>: It estimates the trend of ongoing epidemics by calculating the time-varying reproduction ratio.</li>
+            </ol>
+            <p>
+                The dashboard integrates spatial structure into epidemic risk estimates using human contact and mobility data provided by <a href="https://dataforgood.facebook.com/">Meta Data For Good</a>. It caters to a diverse range of users, including public health officials, researchers, and modelers, and allows for the use of both default and custom data inputs.
+            </p>
+            <h3>Disclaimers:</h3>
+            <ul  class="align-left">
                 <li>The values of the indicators have the sole purpose of illustrating the dashboard and have no relationship to actual epidemic risk or trends.</li>
                 <li>At its current stage, the dashboard is not performing any calculation nor using any contact or mobility data.</li>
                 <li>The figures are currently static mock-ups. In the real dashboard they would update responding to user actions and be interactive (zoom, hover, etc)</li>
             </ul>
+
         </header>
         
         <section class="user-actions">
@@ -38,36 +50,156 @@
                     <option value="directly-transmitted">Directly-transmitted</option>
                     <option value="vector-borne">Vector-borne</option>
                 </select>
+                
                 <div id="vector-options" style="display: none;">
-                    <input type="radio" id="custom-vector" name="vector" value="custom">
-                    <label for="custom-vector">Upload Custom Vector Distribution</label><br>
-                    <input type="file" id="file-upload" style="display: none;">
-                    <input type="radio" id="default-albopictus" name="vector" value="albopictus">
-                    <label for="default-albopictus">Choose Default A. albopictus</label><br>
-                    <input type="radio" id="default-aegypti" name="vector" value="aegypti">
-                    <label for="default-aegypti">Choose Default A. aegypti</label>
+                    <label for="vector-choice">Select Vector Distribution:</label>
+                    <select id="vector-choice">
+                        <option value="none">-- Select --</option>
+                        <option value="custom">Custom Vector Distribution</option>
+                        <option value="default">Default Distribution</option>
+                    </select>
+                    
+                    <div id="custom-vector-options" style="display: none; margin-top: 10px;">
+                        <p>You can upload a GeoJSON file, a shapefile (shp), a raster file (geoTIFF) or comma-separated value file (csv). GeoJSON and shapefiles may contain polygons and points with the custom values (assumed property name: "VALUE"). GeoJSON, shapefiles and geoTIFF files should include a specification of the coordinate reference system used, otherwise WGS84 will be assumed. Comma-separated values may contain three columns: "LONGITUDE","LATITUDE","VALUE". Longitude and latitude should be given as positive or negative decimal numbers.
+                            The data provided will then be spatially interpolated to match the resolution of our model.<p class="meta-note">note: possibility to specify interpolation scheme</p> The values provided can eutger represent suitability - a value between 0 and 1 that represents the relative environmental suitability of a specific area to the vector life-cycle, or the vector abundance - the expected number of vectors per unit area.</p>
+                        <input type="file" id="file-upload">
+                        
+                        <label for="distribution-type">Choose Your Data Type:</label>
+                        <select id="distribution-type">
+                            <option value="suitability">Vector Suitability (0-1 scale)</option>
+                            <option value="abundance">Abundance (average mosquitoes per area unit)</option>
+                        </select>
+                        
+                        <div id="scaling-factor-container" style="display: none; margin-top: 10px;">
+                            <label for="scaling-factor">Specify surface area unit:</label>
+                            <select id="scaling-factor">
+                                <option value="ha">hectare</option>
+                                <option value="km2">square kilometer</option>
+                                <option value="m2">square meter</option>
+                                <option value="mi2">square mile</option>
+                            </select>
+                        </div>
+                    </div>
+                
+                    <div id="default-vector-options" style="display: none; margin-top: 10px;">
+                        <label for="default-vector-type">Select Vector Species:</label>
+                        <select id="default-vector-type">
+                            <option value="albopictus">A. albopictus</option>
+                            <option value="aegypti">A. aegypti</option>
+                            <option value="both">Both</option>
+                        </select>
+                
+                        <label for="reference-source">Select Reference:</label>
+                        <select id="reference-source">
+                            <option value="global1">Zardini et al. 2024 (global)</option>
+                            <option value="global2">Kraemer et al. 2019 (global)</option>
+                            <option value="france">ArboCarto (France-only)</option>
+                        </select>
+                        <button id="open-reference" style="margin-top: 10px;">Open Reference</button>
+                    </div>
+                
+                    <div id="temperature-options" style="display: none; margin-top: 10px;">
+                        <div class="tooltip">
+                            <label for="temperature-model">Temperature-Dependent Model:</label>
+                            <span class="tooltip-text">Toggle a logistic dependence of vector abundance on temperature, <a href="https://www.thelancet.com/journals/lanplh/article/PIIS2542-5196(23)00252-8/fulltext" target="_blank">parametrized to Aedes genus</a>. Choose average temperature, upload temperature select historical data. (More customization of the temperature model will also be possible)</span>
+                        </div>
+                        <select id="temperature-model">
+                            <option value="none">Off</option>
+                            <option value="slider">Set Average Temperature</option>
+                            <option value="historical">Use Historical Data</option>
+                            <option value="upload">Upload Raster of Temperature Values</option>
+                        </select>
+                        
+                        <div id="temperature-slider" style="display: none; margin-top: 10px;">
+                            <label for="temperature-value">Temperature (°C):</label>
+                            <input type="range" id="temperature-value" min="10" max="40" step="0.1" value="25">
+                            <span id="temperature-value-display">25°C</span>
+                        </div>
+                
+                        <div id="historical-date" style="display: none; margin-top: 10px;">
+                            <label for="historical-date-input">Set Date:</label>
+                            <input type="date" id="historical-date-input">
+                        </div>
+                
+                        <div id="upload-temperature-raster" style="display: none; margin-top: 10px;">
+                            <input type="file" id="temperature-raster-upload">
+                        </div>
+                    </div>
                 </div>
+                
+
             </div>
         </section>
 
         <section class="part">
             <h2 style="color:#034168">Part 1 - Emerging epidemics: Estimating the risk of outbreak</h2>
-            <p>Based upon theory currently under development at <a href="https://www.eugeniovaldano.com">EV / The Modelers</a></p>
-            <div class="user-inputs">
-                <label for="reproduction-ratio">Input Basic Reproduction Ratio:</label>
-                <input type="number" id="reproduction-ratio" placeholder="Custom Value">
-                <select id="transmissibility">
-                    <option value="low">Low Transmissibility</option>
-                    <option value="mid">Mid Transmissibility</option>
-                    <option value="high">High Transmissibility</option>
-                </select>
+            <p>Based upon theory currently under development at <a href="https://www.eugeniovaldano.com">EV / The Modelers</a>. Here, you can estimate the threat that an introduction of emergence of the pathogen in an area will cause a large-scale epidemic outbreak. This is measured in terms of the outbreak reproduction ratio (outbreak-Rt). The reproduction ratio (Rt) is the average number of secondary infections that one infected host generates over the course of their infectious period. Rt is a customary metric to evaluate the trend and severity of epidemics, as values larger than one indicate that the epidemic is growing, values smaller than one that it is subsiding. Similarly to how Rt is used during epidemics, outbreak-R is relevant to estimate epidemic risk before the outbreak. It measures the risk that the introduction of emergence of the pathogen will lead to outbreak. When it is smaller than one, pathogen introduction will lead only to small and localized outbreaks. A value larger than one instead signify that the outbreak may grow and eventually affect a sizeable part of the country. Outbreak-R is the excess number of secondary infections that <i>case zero</i> must generate to cause a large-scale epidemic. The dashboard will also display the absolute or relative risk of outbreak in each location. The risk of outbreak is the combination between the likelihood that the pathogen emerges or is introduced, and the likelihood that the emergence or introduction causes an epidemic. Our theory, combined with Meta's data, estimates the latter. You can input the former as an absolute emergence or importation rate (average number of infected hosts per weeks), for each of the considered polygons (instructions on how to upload these data below), or as a relative risk of emergence or importation in each polygon, i.e., the probability that an emergent/introduced case in the country is located in a specific polygon. You also have the option to choose pre-set relative risk of importation, estimated using Meta's international mobility data (?? to be discussed). <p class="meta-note">note: there's still no reference to this theory, I'm working on it with one of my PhD students, we hope to get a pre-print out in the next months. note: Meta's mobility data to estimate risk of importation?</p> </p>
 
-                <label for="importation-risk">Input Risk of Importation:</label>
-                <select id="importation-risk">
-                    <option value="custom">Input Custom Risk of Importation Data</option>
-                    <option value="default">Use Default Importation Data</option>
+
+            <div class="user-inputs">
+                <label for="reproduction-ratio-choice">Choose disease transmissibility</label>
+                <select id="reproduction-ratio-choice">
+                    <option value="preset">Preset values</option>
+                    <option value="custom">Custom values</option>
                 </select>
+                
+                <div id="preset-r0-options" style="margin-top: 10px;">
+                    <label for="preset-r0">Preset Transmissibility:</label>
+                    <select id="preset-r0">
+                        <option value="mers">MERS (R0 ≈ 0.8)</option>
+                        <option value="flu1">Seasonal flu (R0 ≈ 1.3)</option>
+                        <option value="flu2">2009 H1N1 flu pandemic (R0 ≈ 1.3)</option>
+                        <option value="covid1">COVID-19 in early 2020 (R0 ≈ 2.5)</option>
+                        <option value="covid2">COVID-19 Omicron variant (R0 ≈ 7)</option>
+                        <option value="very-low">Very Low (R0 = 0.5)</option>
+                        <option value="low">Low (R0 = 1)</option>
+                        <option value="medium">Medium (R0 = 1.5)</option>
+                        <option value="high">High (R0 = 3)</option>
+                        <option value="very-high">Very High (R0 = 5)</option>
+                    </select>
+                    <button id="open-r0-reference" style="margin-top: 10px;">Open Reference</button>
+                </div>
+                
+                <div id="custom-r0-options" style="display: none; margin-top: 10px;">
+                    <label for="custom-r0">Input Custom R0 Value:</label>
+                    <input type="number" id="custom-r0" placeholder="Custom R0 Value">
+                </div>
+            
+                <label for="importation-risk-choice">Choose Importation Risk:</label>
+                <select id="importation-risk-choice">
+                    <option value="preset">Preset Relative Risk</option>
+                    <option value="custom">Custom Risk of Importation</option>
+                </select>
+                
+                <div id="preset-importation-options" style="display: none; margin-top: 10px;">
+                    <label for="preset-importation">Preset Relative Risk:</label>
+                    <select id="preset-importation">
+                        <option value="low">Low (Relative Risk = 0.1) - Doe et al. (2021)</option>
+                        <option value="medium">Medium (Relative Risk = 0.5)</option>
+                        <option value="high">High (Relative Risk = 1)</option>
+                    </select>
+                </div>
+                
+                <div id="custom-importation-options" style="display: none; margin-top: 10px;">
+                    <label for="custom-importation-type">Choose Custom Importation Type:</label>
+                    <select id="custom-importation-type">
+                        <option value="relative-risk">Relative Risk of Importation</option>
+                        <option value="importation-rate">Importation Rate (cases per week)</option>
+                    </select>
+                    <p>You can download the list of polygons here:</p>
+                        <a href="polygons.csv" download>Download Polygon List</a>
+                        <p>Upload your CSV file with columns "POLYGON_ID" and "IMPORTATION":</p>
+                    
+                    <div id="relative-risk-upload" style="display: none; margin-top: 10px;">
+                        <p>You can download the list of polygons here: <a href="polygons.csv" download>Download Polygon List</a></p>
+                        <p>Upload your CSV file with columns "POLYGON_ID" and "IMPORTATION":</p>
+                        <input type="file" id="relative-risk-file-upload">
+                    </div>
+                    
+                </div>
             </div>
+            
+
             
             <div class="figure" id="figure1">
                 <img src="fig1.png" alt="Figure 1: Placeholder for emerging epidemics" />
