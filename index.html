@@ -133,7 +133,12 @@
 
         <section class="part">
             <h2 style="color:#034168">Part 1 - Emerging epidemics: Estimating the risk of outbreak</h2>
-            <p>Based upon theory currently under development at <a href="https://www.eugeniovaldano.com">EV / The Modelers</a>. Here, you can estimate the threat that an introduction of emergence of the pathogen in an area will cause a large-scale epidemic outbreak. This is measured in terms of the outbreak reproduction ratio (outbreak-Rt). The reproduction ratio (Rt) is the average number of secondary infections that one infected host generates over the course of their infectious period. Rt is a customary metric to evaluate the trend and severity of epidemics, as values larger than one indicate that the epidemic is growing, values smaller than one that it is subsiding. Similarly to how Rt is used during epidemics, outbreak-R is relevant to estimate epidemic risk before the outbreak. It measures the risk that the introduction of emergence of the pathogen will lead to outbreak. When it is smaller than one, pathogen introduction will lead only to small and localized outbreaks. A value larger than one instead signify that the outbreak may grow and eventually affect a sizeable part of the country. Outbreak-R is the excess number of secondary infections that <i>case zero</i> must generate to cause a large-scale epidemic. The dashboard will also display the absolute or relative risk of outbreak in each location. The risk of outbreak is the combination between the likelihood that the pathogen emerges or is introduced, and the likelihood that the emergence or introduction causes an epidemic. Our theory, combined with Meta's data, estimates the latter. You can input the former as an absolute emergence or importation rate (average number of infected hosts per weeks), for each of the considered polygons (instructions on how to upload these data below), or as a relative risk of emergence or importation in each polygon, i.e., the probability that an emergent/introduced case in the country is located in a specific polygon. You also have the option to choose pre-set relative risk of importation, estimated using Meta's international mobility data (?? to be discussed). <p class="meta-note">note: there's still no reference to this theory, I'm working on it with one of my PhD students, we hope to get a pre-print out in the next months. note: Meta's mobility data to estimate risk of importation?</p> </p>
+            <p>
+                Based upon theory currently under development at <a href="https://www.eugeniovaldano.com">EV / The Modelers</a>. Here, you can estimate <strong>the threat that an introduction of emergence of the pathogen in an area will cause a large-scale epidemic outbreak</strong>. This is measured in terms of the <strong>outbreak reproduction ratio (outbreak-Rt)</strong>. The reproduction ratio (Rt) is the average number of secondary infections that one infected host generates over the course of their infectious period. Rt is a customary metric to evaluate the trend and severity of epidemics, as values larger than one indicate that the epidemic is growing, values smaller than one that it is subsiding. Similarly to how Rt is used during epidemic waves, outbreak-R can estimate epidemic risk before the outbreak. It measures the risk that the introduction of emergence of the pathogen will lead to outbreak. When it is smaller than one, pathogen introduction will lead only to small and localized outbreaks. A value larger than one instead signifies that the outbreak may grow and eventually affect a sizeable part of the country. Outbreak-R is also the excess number of secondary infections that <i>case zero</i> must generate to cause a large-scale epidemic. Here, outbreak-Rt is estimated using <strong>Activity Space Maps</strong> provided by <a href="https://dataforgood.facebook.com/">Meta Data For Good</a>. <strong>The dashboard will also display the absolute or relative risk of outbreak in each location</strong>: The risk of outbreak is the combination between the likelihood that the pathogen emerges or is introduced, and the likelihood that the emergence or introduction causes an epidemic. Our theory, combined with Meta's data, estimates the latter. You can input the former as a rate of emergence or importation (average number of emerging/imported infections per week), for each of the considered polygons (instructions on how to upload these data below). You can also input a relative risk of emergence or importation in each polygon, i.e., the probability that an emergent/introduced case in the country is located in a specific polygon. There is also the option to choose pre-set relative risk of importation, estimated using Meta's international mobility data (?? to be discussed).
+                <p class="meta-note">
+                    note: there's still no reference to this theory, I'm working on it with one of my PhD students, we hope to get a pre-print out in the next months. note: Meta's mobility data to estimate risk of importation?
+                </p>
+            </p>
 
 
             <div class="user-inputs">
@@ -146,16 +151,17 @@
                 <div id="preset-r0-options" style="margin-top: 10px;">
                     <label for="preset-r0">Preset Transmissibility:</label>
                     <select id="preset-r0">
-                        <option value="mers">MERS (R0 ≈ 0.8)</option>
-                        <option value="flu1">Seasonal flu (R0 ≈ 1.3)</option>
-                        <option value="flu2">2009 H1N1 flu pandemic (R0 ≈ 1.3)</option>
-                        <option value="covid1">COVID-19 in early 2020 (R0 ≈ 2.5)</option>
-                        <option value="covid2">COVID-19 Omicron variant (R0 ≈ 7)</option>
-                        <option value="very-low">Very Low (R0 = 0.5)</option>
-                        <option value="low">Low (R0 = 1)</option>
-                        <option value="medium">Medium (R0 = 1.5)</option>
-                        <option value="high">High (R0 = 3)</option>
-                        <option value="very-high">Very High (R0 = 5)</option>
+                        <option value="mers">MERS (2012-2013) </option> <!--[R0 ≈ 0.8]-->
+                        <option value="flu1">Influenza (seasonal)</option> <!--[R0 ≈ 1.3]-->
+                        <option value="flu2">Influenza (2009 H1N1 pandemic)</option> <!--[R0 ≈ 1.6]-->
+                        <option value="ebola">Ebola (2014)</option> <!--[R0 ≈ 1.8]-->
+                        <option value="covid1">COVID-19 (ancestral variant)</option> <!--[R0 ≈ 3]-->
+                        <option value="covid2">COVID-19 (Omicron variant)</option> <!--[R0 ≈ 9]-->
+                        <option value="very-low">Very Low</option> <!--[R0 ≈ 0.5]-->
+                        <option value="low">Low</option> <!--[R0 ≈ 0.1]-->
+                        <option value="medium">Medium</option> <!--[R0 ≈ 1.5]-->
+                        <option value="high">High</option> <!--[R0 ≈ 3]-->
+                        <option value="very-high">Very High</option> <!--[R0 ≈ 5]-->
                     </select>
                     <button id="open-r0-reference" style="margin-top: 10px;">Open Reference</button>
                 </div>
@@ -186,7 +192,7 @@
                         <option value="relative-risk">Relative Risk of Importation</option>
                         <option value="importation-rate">Importation Rate (cases per week)</option>
                     </select>
-                    <p>You can download the list of polygons here:</p>
+                    <p>You can download the list of polygons and their accepted ID here:</p>
                         <a href="polygons.csv" download>Download Polygon List</a>
                         <p>Upload your CSV file with columns "POLYGON_ID" and "IMPORTATION":</p>
                     
@@ -231,13 +237,107 @@
 
         <section class="part">
             <h2 style="color:#C41E3A">Part 2 - Circulating epidemics: Analyzing trends</h2>
-            <p>Based upon the theory developed in <a href="https://www.nature.com/articles/s41567-024-02471-7">Birello et al. (2024) Nat Phys</a>, combined with standard approaches to computing Rt such as <a href="https://doi.org/10.1093/aje/kwt133">this</a>.</p>
+            <p>
+                Based upon the theory developed in <a href="https://www.nature.com/articles/s41567-024-02471-7">Birello et al. (2024) Nat Phys</a>, combined with standard approaches to computing Rt such as <a href="https://doi.org/10.1093/aje/kwt133">this</a>.
+                <strong>Estimating the trend and growth rate of an ongoing epidemic wave is crucial to inform containment policies. The reproduction ratio (Rt) is a standard measure of epidemic trend</strong> and represents the average number of secondary infections that one infected host generates over the course of their infectious period. Values larger than one indicate that the epidemic is growing, values smaller than one that it is subsiding. Variations in Rt measure changes in epidemic trend and the possibly effectiveness of control measures. Rt can be estimated from surveillance data, i.e., time series of recorded cases, severe cases, hospitalizations, deaths or other proxies for infection, combined with <strong>Colocation Maps</strong> provided by <a href="https://dataforgood.facebook.com/">Meta Data For Good</a>. Here, you will have to upload your surveillance data. Surveillance data may be uploaded as a CSV file with the following columns: "DATE", "POLYGON_ID", "VALUE". You will be asked to specify the date format for the "DATE" column. "POLYGON_ID" should be the ID of the geographic area according to one of <a href="polygons.csv" download>these encodings</a>. You will also need to provide a generation time, or a generation time distribution or choose among presets. You also have the possibility of providing a time from infection to logging in the surveillance system, or its distribution (e.g., if you provide hospitalizations this can be the time from infection to hospitalization). When you provide full distributions, you should provide the probability associated to each time lag (in days), in the form of a CSV file with columns "DAY","VALUE", where "DAY" is an integer greater or equal to one. The dashboard assumes that the probability is zero for any time lag that you do not provide.
+            </p>
             
             <!-- Upload surveillance data button -->
             <div class="upload-surveillance">
                 <button id="upload-surveillance-btn">Upload your surveillance data</button>
                 <input type="file" id="surveillance-file-upload" style="display: none;">
             </div>
+
+
+            <!-- Generation Time Section -->
+            <div class="user-inputs">
+                <label for="generation-time-choice">Choose Generation Time Option:</label>
+                <select id="generation-time-choice">
+                    <option value="preset">Preset Generation Time</option>
+                    <option value="custom">Custom Generation Time</option>
+                </select>
+                
+                <div id="preset-generation-time-options" style="display: none; margin-top: 10px;">
+                    <label for="preset-generation-time">Preset Generation Time:</label>
+                    <select id="preset-generation-time">
+                        <option value="mers">MERS (2012-2013) </option> 
+                        <option value="flu1">Influenza (seasonal)</option> 
+                        <option value="flu2">Influenza (2009 H1N1 pandemic)</option> 
+                        <option value="ebola">Ebola (2014)</option> 
+                        <option value="covid1">COVID-19 (ancestral variant)</option> 
+                        <option value="covid2">COVID-19 (Omicron variant)</option> 
+                        <option value="shom">Short and Homogeneous (mean 2 days, range 1-3 days)</option> 
+                        <option value="shet">Short and Heterogeneous (2 days, range 1-7 days)</option> 
+                        <option value="mhom">Medium and Homogeneous (5 days, range 4-6 days)</option> 
+                        <option value="mhet">Medium and Heterogeneous (5 days, range 3-14 days)</option> 
+                        <option value="lhom">Long and Homogeneous (14 days, range 12-16 days)</option> 
+                        <option value="lhet">Medium and Heterogeneous (14 days, range 7-21 days)</option> 
+                    </select>
+                    <button id="open-generation-time-reference" style="margin-top: 10px;">Open Reference</button>
+                </div>
+                
+                <div id="custom-generation-time-options" style="display: none; margin-top: 10px;">
+                    <label for="custom-generation-time-type">Choose Custom Generation Time Type:</label>
+                    <select id="custom-generation-time-type">
+                        <option value="mean-sd">Mean and Standard Deviation</option>
+                        <option value="full-distribution">Full Distribution</option>
+                    </select>
+
+                    <div id="mean-sd-input" style="display: none; margin-top: 10px;">
+                        <label for="mean-gt">Mean Generation Time:</label>
+                        <input type="number" id="mean-gt" placeholder="Mean (days)">
+                        <label for="sd-gt">Standard Deviation or Range (optional):</label>
+                        <input type="number" id="sd-gt" placeholder="Standard Deviation or Range Min, Max (days)">
+                        <button id="advanced-options-btn" style="margin-top: 10px;">Advanced</button>
+                    </div>
+
+                    <div id="advanced-options" style="display: none; margin-top: 10px;">
+                        <label for="distribution-type">Select Distribution:</label>
+                        <select id="distribution-type">
+                            <option value="gamma">Gamma</option>
+                            <option value="exponential">Exponential</option>
+                            <option value="lognormal">Lognormal</option>
+                        </select>
+                    </div>
+
+                    <div id="full-distribution-upload" style="display: none; margin-top: 10px;">
+                        <p>Upload CSV file with columns "DAY" and "VALUE" where "DAY" is an integer and "VALUE" is the probability associated with each time lag:</p>
+                        <input type="file" id="full-distribution-file-upload">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Time from Infection to Logging Section -->
+            <div class="user-inputs" style="margin-top: 20px;">
+                <label for="infection-logging-choice">Time from Infection to Logging:</label>
+                <select id="infection-logging-choice">
+                    <option value="zero">Default (0 days)</option>
+                    <option value="custom">Custom Time</option>
+                </select>
+                
+                <div id="custom-infection-logging-options" style="display: none; margin-top: 10px;">
+                    <label for="infection-logging-type">Choose Custom Time Type:</label>
+                    <select id="infection-logging-type">
+                        <option value="mean-sd">Mean and Standard Deviation</option>
+                        <option value="full-distribution">Full Distribution</option>
+                    </select>
+
+                    <div id="infection-logging-mean-sd" style="display: none; margin-top: 10px;">
+                        <label for="mean-logging">Mean Time:</label>
+                        <input type="number" id="mean-logging" placeholder="Mean (days)">
+                        <label for="sd-logging">Standard Deviation (optional):</label>
+                        <input type="number" id="sd-logging" placeholder="Standard Deviation (days)">
+                    </div>
+
+                    <div id="infection-logging-distribution-upload" style="display: none; margin-top: 10px;">
+                        <p>Upload CSV file with columns "DAY" and "VALUE" where "DAY" is an integer and "VALUE" is the probability associated with each time lag:</p>
+                        <input type="file" id="infection-logging-file-upload">
+                    </div>
+                </div>
+            </div>
+
+
+
 
 
             <div class="figure" id="figure2">

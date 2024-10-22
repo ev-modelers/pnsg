@@ -172,20 +172,179 @@ document.getElementById('open-r0-reference').addEventListener('click', function 
     let url = '';
 
     if (r0Value === 'mers') {
-        url = 'https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(13)61492-0/fulltexte'; // Replace with the actual URL for flu reference
+        url = 'https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(13)61492-0/fulltexte'; 
     } else if (r0Value === 'flu1') {
-        url = 'https://www.example.com/covid-reference'; // Replace with the actual URL for COVID-19 reference
+        url = 'https://pmc.ncbi.nlm.nih.gov/articles/PMC2680121/'; 
     } else if (r0Value === 'flu2') {
-        url = 'https://www.example.com/covid-reference'; // Replace with the actual URL for COVID-19 reference
+        url = 'https://pmc.ncbi.nlm.nih.gov/articles/PMC3735127/'; 
     } else if (r0Value === 'covid1') {
-        url = 'https://www.example.com/covid-reference'; // Replace with the actual URL for COVID-19 reference
+        url = 'https://pmc.ncbi.nlm.nih.gov/articles/PMC7657547/'; 
     } else if (r0Value === 'covid2') {
-        url = 'https://www.example.com/covid-reference'; // Replace with the actual URL for COVID-19 reference
+        url = 'https://pmc.ncbi.nlm.nih.gov/articles/PMC8992231/'; 
+    }  else if (r0Value === 'ebola') {
+        url = 'https://pmc.ncbi.nlm.nih.gov/articles/PMC9507849/'; 
     }
 
     if (url) {
         window.open(url, '_blank');
     } else {
         alert('No reference available for this selection.');
+    }
+});
+
+
+// Function to initialize the state based on default selections
+function initializeState() {
+    // Generation Time Initialization
+    const generationTimeChoice = document.getElementById('generation-time-choice');
+    const presetGenerationTimeOptions = document.getElementById('preset-generation-time-options');
+    const customGenerationTimeOptions = document.getElementById('custom-generation-time-options');
+    const customGenerationTimeType = document.getElementById('custom-generation-time-type');
+    const meanSdInput = document.getElementById('mean-sd-input');
+    const fullDistributionUpload = document.getElementById('full-distribution-upload');
+
+    // Set initial state for generation time
+    if (generationTimeChoice.value === 'preset') {
+        presetGenerationTimeOptions.style.display = 'block';
+        customGenerationTimeOptions.style.display = 'none';
+    } else {
+        presetGenerationTimeOptions.style.display = 'none';
+        customGenerationTimeOptions.style.display = 'block';
+    }
+
+    // Set initial state for custom generation time type
+    if (customGenerationTimeType.value === 'mean-sd') {
+        meanSdInput.style.display = 'block';
+        fullDistributionUpload.style.display = 'none';
+    } else {
+        meanSdInput.style.display = 'none';
+        fullDistributionUpload.style.display = 'block';
+    }
+
+    // Infection to Logging Initialization
+    const infectionLoggingChoice = document.getElementById('infection-logging-choice');
+    const customInfectionLoggingOptions = document.getElementById('custom-infection-logging-options');
+    const infectionLoggingType = document.getElementById('infection-logging-type');
+    const meanSdLogging = document.getElementById('infection-logging-mean-sd');
+    const fullDistributionLogging = document.getElementById('infection-logging-distribution-upload');
+
+    // Set initial state for infection to logging
+    if (infectionLoggingChoice.value === 'custom') {
+        customInfectionLoggingOptions.style.display = 'block';
+    } else {
+        customInfectionLoggingOptions.style.display = 'none';
+    }
+
+    // Set initial state for custom infection logging type
+    if (infectionLoggingType.value === 'mean-sd') {
+        meanSdLogging.style.display = 'block';
+        fullDistributionLogging.style.display = 'none';
+    } else {
+        meanSdLogging.style.display = 'none';
+        fullDistributionLogging.style.display = 'block';
+    }
+}
+
+// Call the initializeState function on page load
+window.addEventListener('DOMContentLoaded', initializeState);
+
+// Event listeners for generation time options
+document.getElementById('generation-time-choice').addEventListener('change', function () {
+    const presetOptions = document.getElementById('preset-generation-time-options');
+    const customOptions = document.getElementById('custom-generation-time-options');
+    
+    if (this.value === 'preset') {
+        presetOptions.style.display = 'block';
+        customOptions.style.display = 'none';
+    } else if (this.value === 'custom') {
+        presetOptions.style.display = 'none';
+        customOptions.style.display = 'block';
+    }
+});
+
+document.getElementById('custom-generation-time-type').addEventListener('change', function () {
+    const meanSdInput = document.getElementById('mean-sd-input');
+    const fullDistributionUpload = document.getElementById('full-distribution-upload');
+
+    meanSdInput.style.display = 'none';
+    fullDistributionUpload.style.display = 'none';
+
+    if (this.value === 'mean-sd') {
+        meanSdInput.style.display = 'block';
+    } else if (this.value === 'full-distribution') {
+        fullDistributionUpload.style.display = 'block';
+    }
+});
+
+// Handle the opening of generation time references
+document.getElementById('open-generation-time-reference').addEventListener('click', function () {
+    const selectedValue = document.getElementById('preset-generation-time').value;
+    let url = '';
+
+    if (selectedValue === 'covid-omicron') {
+        url = 'https://example.com/covid-omicron-reference'; // Replace with actual reference
+    } else if (selectedValue === 'flu') {
+        url = 'https://example.com/flu-reference'; // Replace with actual reference
+    } else if (selectedValue === 'ebola') {
+        url = 'https://example.com/ebola-reference'; // Replace with actual reference
+    }
+
+    if (url) {
+        window.open(url, '_blank');
+    } else {
+        alert('No reference available for this selection.');
+    }
+});
+
+// Event listeners for infection to logging options
+document.getElementById('infection-logging-choice').addEventListener('change', function () {
+    const customOptions = document.getElementById('custom-infection-logging-options');
+    
+    if (this.value === 'custom') {
+        customOptions.style.display = 'block';
+    } else {
+        customOptions.style.display = 'none';
+    }
+});
+
+document.getElementById('infection-logging-type').addEventListener('change', function () {
+    const meanSdLogging = document.getElementById('infection-logging-mean-sd');
+    const fullDistributionLogging = document.getElementById('infection-logging-distribution-upload');
+
+    meanSdLogging.style.display = 'none';
+    fullDistributionLogging.style.display = 'none';
+
+    if (this.value === 'mean-sd') {
+        meanSdLogging.style.display = 'block';
+    } else if (this.value === 'full-distribution') {
+        fullDistributionLogging.style.display = 'block';
+    }
+});
+
+
+
+// Event listener for custom generation time type
+document.getElementById('custom-generation-time-type').addEventListener('change', function () {
+    const meanSdInput = document.getElementById('mean-sd-input');
+    const fullDistributionUpload = document.getElementById('full-distribution-upload');
+
+    meanSdInput.style.display = 'none';
+    fullDistributionUpload.style.display = 'none';
+
+    if (this.value === 'mean-sd') {
+        meanSdInput.style.display = 'block';
+    } else if (this.value === 'full-distribution') {
+        fullDistributionUpload.style.display = 'block';
+    }
+});
+
+// Event listener for "Advanced" button
+document.getElementById('advanced-options-btn').addEventListener('click', function () {
+    const advancedOptions = document.getElementById('advanced-options');
+    // Toggle the display of the advanced options
+    if (advancedOptions.style.display === 'none' || advancedOptions.style.display === '') {
+        advancedOptions.style.display = 'block';
+    } else {
+        advancedOptions.style.display = 'none';
     }
 });
