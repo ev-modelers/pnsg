@@ -1,20 +1,3 @@
-// Update displayed values next to sliders
-document.getElementById('risk-low').addEventListener('input', function () {
-    document.getElementById('risk-low-value').innerText = this.value;
-});
-
-document.getElementById('risk-mid').addEventListener('input', function () {
-    document.getElementById('risk-mid-value').innerText = this.value;
-});
-
-document.getElementById('risk-high').addEventListener('input', function () {
-    document.getElementById('risk-high-value').innerText = this.value;
-});
-
-document.getElementById('hotspot-threshold').addEventListener('input', function () {
-    document.getElementById('hotspot-threshold-value').innerText = `${this.value}%`;
-});
-
 document.getElementById('date-start').addEventListener('input', function () {
     const monthYear = new Date(2023, this.value - 4).toLocaleString('default', { month: 'long', year: 'numeric' });
     document.getElementById('date-start-value').innerText = monthYear;
@@ -347,4 +330,43 @@ document.getElementById('advanced-options-btn').addEventListener('click', functi
     } else {
         advancedOptions.style.display = 'none';
     }
+});
+
+
+// Event listener for the "Advanced Settings" button
+document.getElementById('advanced-settings-btn').addEventListener('click', function () {
+    const advancedSettings = document.getElementById('advanced-settings');
+    
+    // Check the current display state and toggle it
+    if (advancedSettings.style.display === 'none' || advancedSettings.style.display === '') {
+        advancedSettings.style.display = 'block';
+    } else {
+        advancedSettings.style.display = 'none';
+    }
+});
+
+// Function to update and display the risk boundaries
+const lowRiskBoundaryInput = document.getElementById('low-risk-boundary');
+const midRiskBoundaryInput = document.getElementById('mid-risk-boundary');
+
+lowRiskBoundaryInput.addEventListener('input', updateRiskBoundaries);
+midRiskBoundaryInput.addEventListener('input', updateRiskBoundaries);
+
+function updateRiskBoundaries() {
+    const lowRiskValue = parseFloat(lowRiskBoundaryInput.value);
+    const midRiskValue = parseFloat(midRiskBoundaryInput.value);
+
+    // Ensure the values make logical sense (low < mid)
+    if (lowRiskValue >= midRiskValue) {
+        alert("The 'low' risk boundary must be less than the 'mid' risk boundary.");
+        return;
+    }
+
+    // Update the displayed boundaries for confirmation
+    console.log(`Low risk: 0 to ${lowRiskValue}, Mid risk: ${lowRiskValue} to ${midRiskValue}, High risk: ${midRiskValue} to ∞`);
+}
+
+// Event listener for the hotspot threshold slider
+document.getElementById('hotspot-threshold').addEventListener('input', function () {
+    document.getElementById('hotspot-threshold-value').innerText = `${this.value}%`;
 });

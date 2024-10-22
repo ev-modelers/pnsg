@@ -205,41 +205,58 @@
                 </div>
             </div>
             
+            <p class="meta-note">
+                note: The figure gives an example of analysis that can be included in the dahsboard. Here, you select a baseline period and then a day (or period) that you consider to be the <i>event</i> (e.g., when extreme weather hit). The dashboard then computes metrics both for the baseline and the event, and compares them. Like this you can see if and how much the event changed epidemic risk.
+            </p>
 
+            <p><strong>Select here the two periods that you wish to analyze and compare:</strong></p>
+            <p>Choose start and end dates of the baseline period: from <input type="date" id="baseline-start"> to <input type="date" id="baseline-end">.</p>
+            <p>Choose start and end dates of the event period: from <input type="date" id="event-start"> to <input type="date" id="event-end">.</p>
+
+            <p><strong>Panel description:</strong>The panel displays estimates of outbreak-Rt in each location, both during the baseline period and the event. It also shows the 10 locations with the highest outbreak-Rt during the baseline period and compares their outbreak-Rt during the event. Then, it estimates the proportion of the population of the country who lives in each of three risk levels according to the estimated outbreak-Rt values. Risk levels can be customized in the Advanced Settings. Then, in the second row, the dashboard shows the relative change in risk of oubtreak (upon introduction or emergence) in each location, from the baseline to the event period. Finally, for the event period, the dashboard identify risk hotspots, classified on whether they are importation or emergence hotspots (high risk of importation or emergence), outbreak hotspots (high risk of outbreak upon emergence/importation), or both. Hotspot definition can be customized in Advanced Settings.</p>
             
             <div class="figure" id="figure1">
                 <img src="fig1.png" alt="Figure 1: Placeholder for emerging epidemics" />
             </div>
 
-            <!-- Mockup buttons and sliders -->
-            <div class="controls">
-                <button>Download Figure</button>
-                <button>Download Estimates</button>
+            <!-- Advanced Settings Button -->
+            <button id="advanced-settings-btn" style="margin-top: 20px;">Advanced Settings</button>
+
+            <!-- Advanced Controls (Initially Hidden) -->
+            <div class="advanced-controls" id="advanced-settings" style="display: none; margin-top: 20px;">
                 <div class="sliders">
-                    <label for="risk-low">Low Risk Level:</label>
-                    <input type="range" id="risk-low" min="0" max="5" step="0.1" value="1.">
-                    <span id="risk-low-value">2.5</span><br>
-
-                    <label for="risk-mid">Mid Risk Level:</label>
-                    <input type="range" id="risk-mid" min="0" max="5" step="0.1" value="1.5">
-                    <span id="risk-mid-value">2.5</span><br>
-
-                    <label for="risk-high">High Risk Level:</label>
-                    <input type="range" id="risk-high" min="0" max="5" step="0.1" value="2.">
-                    <span id="risk-high-value">2.5</span><br>
-
-                    <label for="hotspot-threshold">Hotspot Threshold (%):</label>
-                    <input type="range" id="hotspot-threshold" min="90" max="99" step="1" value="85">
-                    <span id="hotspot-threshold-value">85%</span>
+                    <label><strong>Set Risk Level Boundaries.</strong></label> This lets you customize the values of outbreak-Rt that define the three risk classes: level I (low risk), level II (high risk) and level III (high risk).
+                    <div>
+                        0 - Risk Level I - 
+                        <input type="number" id="low-risk-boundary" min="0" max="5" step="0.1" value="1">
+                        - Risk Level II - 
+                        <input type="number" id="mid-risk-boundary" min="0" max="5" step="0.1" value="2">
+                        - Risk Level III - ∞
+                    </div>
+                    
+                    <label for="hotspot-threshold"><strong>Hotspot Threshold (%).</strong></label> This lets you customize the percentile threshold above which a place is considered a hotspot. For example, if the threshold is set to 90%, then a place is an outbreak hotspot if its outbreak-Rt is in the top 10% among all the measured outbreak-Rt.
+                    <input type="range" id="hotspot-threshold" min="75" max="99" step="1" value="90">
+                    <span id="hotspot-threshold-value">90%</span>
                 </div>
             </div>
+
+            <p>
+                Here you can download the panel as a static image (PNG). You can also toggle Table View, where you can select the columns you are interested in and download dashboard estimates as a CSV, shapefile and more.
+            </p>
+
+            <!-- Download Buttons (Always Visible) -->
+            <div class="controls">
+                <a id='download-fig1' href='fig1.png' download='fig1.png'><button>Download Figure</button></a>
+                <a id='button-tableview-1' href="tableview1.html"><button>Table View</button></a>
+            </div>
+
         </section>
 
         <section class="part">
             <h2 style="color:#C41E3A">Part 2 - Circulating epidemics: Analyzing trends</h2>
             <p>
                 Based upon the theory developed in <a href="https://www.nature.com/articles/s41567-024-02471-7">Birello et al. (2024) Nat Phys</a>, combined with standard approaches to computing Rt such as <a href="https://doi.org/10.1093/aje/kwt133">this</a>.
-                <strong>Estimating the trend and growth rate of an ongoing epidemic wave is crucial to inform containment policies. The reproduction ratio (Rt) is a standard measure of epidemic trend</strong> and represents the average number of secondary infections that one infected host generates over the course of their infectious period. Values larger than one indicate that the epidemic is growing, values smaller than one that it is subsiding. Variations in Rt measure changes in epidemic trend and the possibly effectiveness of control measures. Rt can be estimated from surveillance data, i.e., time series of recorded cases, severe cases, hospitalizations, deaths or other proxies for infection, combined with <strong>Colocation Maps</strong> provided by <a href="https://dataforgood.facebook.com/">Meta Data For Good</a>. Here, you will have to upload your surveillance data. Surveillance data may be uploaded as a CSV file with the following columns: "DATE", "POLYGON_ID", "VALUE". You will be asked to specify the date format for the "DATE" column. "POLYGON_ID" should be the ID of the geographic area according to one of <a href="polygons.csv" download>these encodings</a>. You will also need to provide a generation time, or a generation time distribution or choose among presets. You also have the possibility of providing a time from infection to logging in the surveillance system, or its distribution (e.g., if you provide hospitalizations this can be the time from infection to hospitalization). When you provide full distributions, you should provide the probability associated to each time lag (in days), in the form of a CSV file with columns "DAY","VALUE", where "DAY" is an integer greater or equal to one. The dashboard assumes that the probability is zero for any time lag that you do not provide.
+                <strong>Estimating the trend and growth rate of an ongoing epidemic wave is crucial to inform containment policies. The reproduction ratio (Rt) is a standard measure of epidemic trend</strong> and represents the average number of secondary infections that one infected host generates over the course of their infectious period. Values larger than one indicate that the epidemic is growing, values smaller than one that it is subsiding. Variations in Rt measure changes in epidemic trend and the possibly effectiveness of control measures. Rt can be estimated from surveillance data, i.e., time series of recorded cases, severe cases, hospitalizations, deaths or other proxies for infection, combined with <strong>Colocation Maps</strong> provided by <a href="https://dataforgood.facebook.com/">Meta Data For Good</a>. Here, you will have to upload your surveillance data. Surveillance data may be uploaded as a CSV file with the following columns: "DATE", "POLYGON_ID", "VALUE". You will be asked to specify the date format for the "DATE" column. "POLYGON_ID" should be the ID of the geographic area according to one of <a href="polygons.csv" download>these encodings</a>. Missing values are possible. You will also need to provide a generation time, or a generation time distribution or choose among presets. You also have the possibility of providing a time from infection to logging in the surveillance system, or its distribution (e.g., if you provide hospitalizations this can be the time from infection to hospitalization). When you provide full distributions, you should provide the probability associated to each time lag (in days), in the form of a CSV file with columns "DAY","VALUE", where "DAY" is an integer greater or equal to one. The dashboard assumes that the probability is zero for any time lag that you do not provide.
             </p>
             
             <!-- Upload surveillance data button -->
@@ -337,26 +354,22 @@
             </div>
 
 
-
+            <p><strong>Panel description:</strong>The top figure displays the total daily number of occurrencies at country level per 100,000 residents. They can be cases, or other (e.g., hospitalizations), depending on the data you uploaded. The bottom figure displays the calculated reproduction ratio Rt. It shows the uncorrected value, which is what traditional surveillance is likely to report, and the corrected value using Meta's Colocation Maps and the theory developed <a href="https://www.nature.com/articles/s41567-024-02471-7">here</a>. The difference between the two proves that ignoring the spatial structure of the population biases estimates of epidemic trends. Notably, when the uncorrected Rt is below one but the corrected Rt is above one this means that traditional surveillance mistakes a growing epidemic wave for a subsiding one.</p>
 
 
             <div class="figure" id="figure2">
                 <img src="fig2.png" alt="Figure 2: Placeholder for circulating epidemics" />
             </div>
 
+
             <!-- Mockup buttons and date slider -->
             <div class="controls">
-                <button>Download Figure</button>
-                <button>Download Estimates</button>
-                <div class="date-slider">
-                    <label for="date-start">Start Date:</label>
-                    <input type="range" id="date-start" min="2023-04" max="2024-01" step="1" value="2023-04">
-                    <span id="date-start-value">April 2023</span><br>
-
-                    <label for="date-end">End Date:</label>
-                    <input type="range" id="date-end" min="2023-04" max="2024-01" step="1" value="2024-01">
-                    <span id="date-end-value">January 2024</span>
-                </div>
+                Choose date range: from <input type="date" id="surv-start"> to <input type="date" id="surv-end">
+                <p>
+                    Here you can download the panel as a static image (PNG). You can also toggle Table View, where you can select the columns you are interested in and download dashboard estimates as a CSV, shapefile and more.
+                </p>
+                <a id='download-fig2' href='fig2.png' download='fig2.png'><button>Download Figure</button></a>
+                <a id='button-tableview-2' href="tableview2.html"><button>Table View</button></a>
             </div>
         </section>
     </div>

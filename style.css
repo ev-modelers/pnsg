@@ -92,3 +92,7 @@ select, input[type="number"] {
     display: block; /* Makes sure it behaves as a block element */
     border-radius: 3px; /* Rounds the corners */
 }
+
+.advanced-controls {
+    display: none; /* Make sure this is the initial state */
+}
