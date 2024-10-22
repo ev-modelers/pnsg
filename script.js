@@ -1,13 +1,3 @@
-document.getElementById('date-start').addEventListener('input', function () {
-    const monthYear = new Date(2023, this.value - 4).toLocaleString('default', { month: 'long', year: 'numeric' });
-    document.getElementById('date-start-value').innerText = monthYear;
-});
-
-document.getElementById('date-end').addEventListener('input', function () {
-    const monthYear = new Date(2023, this.value - 4).toLocaleString('default', { month: 'long', year: 'numeric' });
-    document.getElementById('date-end-value').innerText = monthYear;
-});
-
 // Show or hide vector options based on transmission mode selection
 document.getElementById('transmission-select').addEventListener('change', function () {
     const vectorOptions = document.getElementById('vector-options');
@@ -137,7 +127,7 @@ document.getElementById('importation-risk-choice').addEventListener('change', fu
 // Handle custom importation type options
 document.getElementById('custom-importation-type').addEventListener('change', function () {
     const relativeRiskUpload = document.getElementById('relative-risk-upload');
-    const importationRateUpload = document.getElementById('importation-rate-upload');
+    const importationRateUpload = document.getElementById('relative-risk-upload');
     
     relativeRiskUpload.style.display = 'none';
     importationRateUpload.style.display = 'none';
@@ -370,3 +360,5 @@ function updateRiskBoundaries() {
 document.getElementById('hotspot-threshold').addEventListener('input', function () {
     document.getElementById('hotspot-threshold-value').innerText = `${this.value}%`;
 });
+
+
