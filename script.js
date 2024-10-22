@@ -112,32 +112,19 @@ document.getElementById('reproduction-ratio-choice').addEventListener('change', 
 
 // Handle importation risk options
 document.getElementById('importation-risk-choice').addEventListener('change', function () {
-    const presetImportationOptions = document.getElementById('preset-importation-options');
+    //const presetImportationOptions = document.getElementById('preset-importation-options');
     const customImportationOptions = document.getElementById('custom-importation-options');
     
     if (this.value === 'preset') {
         //presetImportationOptions.style.display = 'block';
         customImportationOptions.style.display = 'none';
     } else if (this.value === 'custom') {
-        presetImportationOptions.style.display = 'none';
+        //presetImportationOptions.style.display = 'none';
         customImportationOptions.style.display = 'block';
     }
 });
 
-// Handle custom importation type options
-document.getElementById('custom-importation-type').addEventListener('change', function () {
-    const relativeRiskUpload = document.getElementById('relative-risk-upload');
-    const importationRateUpload = document.getElementById('relative-risk-upload');
-    
-    relativeRiskUpload.style.display = 'none';
-    importationRateUpload.style.display = 'none';
-    
-    if (this.value === 'relative-risk') {
-        relativeRiskUpload.style.display = 'block';
-    } else if (this.value === 'importation-rate') {
-        importationRateUpload.style.display = 'block';
-    }
-});
+
 
 // Handle the opening of R0 references
 document.getElementById('open-r0-reference').addEventListener('click', function () {

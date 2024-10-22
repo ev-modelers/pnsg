@@ -177,26 +177,14 @@
                     <option value="custom">Custom Risk of Importation</option>
                 </select>
                 
-                <div id="preset-importation-options" style="display: none; margin-top: 10px;">
-                    <label for="preset-importation">Preset Relative Risk:</label>
-                    <select id="preset-importation">
-                        <option value="low">Low (Relative Risk = 0.1) - Doe et al. (2021)</option>
-                        <option value="medium">Medium (Relative Risk = 0.5)</option>
-                        <option value="high">High (Relative Risk = 1)</option>
-                    </select>
-                </div>
-                
                 <div id="custom-importation-options" style="display: none; margin-top: 10px;">
                     <label for="custom-importation-type">Choose Custom Importation Type:</label>
                     <select id="custom-importation-type">
                         <option value="relative-risk">Relative Risk of Importation</option>
                         <option value="importation-rate">Importation Rate (cases per week)</option>
                     </select>
-                    <p>You can download the list of polygons and their accepted ID here:</p>
-                        <a href="polygons.csv" download>Download Polygon List</a>
-                        <p>Upload your CSV file with columns "POLYGON_ID" and "IMPORTATION":</p>
                     
-                    <div id="relative-risk-upload" style="display: none; margin-top: 10px;">
+                    <div id="relative-risk-upload" style="margin-top: 10px;">
                         <p>You can download the list of polygons here: <a href="polygons.csv" download>Download Polygon List</a></p>
                         <p>Upload your CSV file with columns "POLYGON_ID" and "IMPORTATION":</p>
                         <input type="file" id="relative-risk-file-upload">
